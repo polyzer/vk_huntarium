@@ -1,0 +1,4 @@
+let LevelResultMenu = function ()
+{
+	
+};
