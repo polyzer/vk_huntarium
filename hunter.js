@@ -66,9 +66,17 @@ let Hunter = function (json_params)
 	this.Scene.add(this.Mesh);
 };
 
+/*This Function controls behavior of Hunter*/
 Hunter.prototype.behaviorControl = function ()
 {
-
+	switch(this.States.Living){
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.LIVING.DEAD:
+			return ;
+		break;
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.LIVING.LIVE:
+			return ;
+		break;
+	}
 };
 
 Hunter.prototype.getSoul = function ()

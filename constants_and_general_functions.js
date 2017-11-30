@@ -148,6 +148,12 @@ const GAME_CONSTANTS = {
 				ATTACK: {
 					NO: 0,
 					YES: 1
+				},
+				REPRODUCTION: {
+					NO: 0, 
+					LITTLE: 1,
+					MIDDLE: 2,
+					HARD: 3
 				}
 			}
 			INDEX: "BlackHunter",
