@@ -16,56 +16,6 @@ const GAME_CONSTANTS = {
 		CASE_HIDE_RADIUS: 600
 	},
 
-	/*
-	Виды запросов
-	UTOS: user->server;
-	UTOU: user->user;
-	*/
-	REQUESTS: {
-		UTOS: {
-			COME_INTO_ROOM: "come_into_room",
-			LEAVE_ROOM: "leave_room",
-			CREATE_ROOM: "create_room",	
-			FIND_ROOM_TO_ME: "find_room_to_me",
-			ON_COME_TO_BAD_ROOM: "on_come_to_bad_room"
-		},
-		UTOU: {
-			MOVE: "move",
-			SHOOT: "shoot",
-			SEND_NICKNAME: "send_nickname",
-			GET_NICKNAME: "get_nickname",
-			GET_COMMUNICATION_STATUS: "get_communication_status",
-			SEND_COMMUNICATION_STATUS: "send_communication_status",
-			GET_YOUR_VKID: "get_vkid",
-			SEND_MY_VKID: "send_vkid",
-			HIDE_VIDEO: "hide_video",
-			SHOW_VIDEO: "show_video",
-			HIDE_VKID: "hide_vkid",
-			SHOW_VKID: "show_vkid",
-			COMMUNICATION_IS_OVER: "communication_is_over",
-			CAN_I_CONNECT_TO_YOU: "can_I_connect_to_you",
-			YES_YOU_CAN_CONNECT_TO_ME: "yes_you_can_connect_to_me",
-			NO_YOU_CANT_CONNECT_TO_ME: "no_you_cant_connect_to_me",
-			WE_CAN_START_CHATTING: "we_can_start_chatting",
-			GET_YOUR_VISUAL_KEEPER_CASE_MESH_PARAMETERS: "GET_YOUR_CASE_MESH_PARAMETERS",
-			SEND_MY_VISUAL_KEEPER_CASE_MESH_PARAMETERS: "SEND_MY_CASE_MESH_PARAMETERS",
-			GET_YOUR_FULL_DATA: "Get_Your_Full_Data",
-			SEND_MY_FULL_DATA: "Send_My_Full_Data"
-		}
-	},
-
-	MESHES_INDEXES: {
-		HUNTER: 0,
-		TARDIS: 1, /*Внутри такая же как и снаружи!*/
-		HUNTER_SOUL: 2,
-		BEEHIVE: 3
-	},
-
-	CAMERA_VIDEO_SIZES: {
-		SMALL: 128,
-		MEDIUM: 256,
-		LARGE: 512
-	},
 /*
 Описывает состояние игрока.
 */
@@ -157,7 +107,11 @@ const GAME_CONSTANTS = {
 				}
 			}
 			INDEX: "BlackHunter",
-			TIME_TO_ATTACK_SEC: 1
+			TIME_TO_ATTACK_SEC: 1,
+			ATTACK_MODE: {
+				REMOTE: 0,
+				NEAR: 1
+			}
 		},
 		RED: {
 			HEALTH: {

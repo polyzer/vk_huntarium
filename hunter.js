@@ -8,6 +8,7 @@ let Hunter = function (json_params)
 	let json_params_names = [
 		"Scene", //Сцена, в которую будет добавлен Hunter
 		"StartPosition", //Позиция, с которой будет появляться Охотник
+		"CageIndex"
 	];
 	setParametersByArray.call(this, json_params, json_params_names);
 
@@ -16,8 +17,6 @@ let Hunter = function (json_params)
 	this.Health = GAME_CONSTANTS.HUNTERS.BLACK.HEALTH.MAX;
 	this.Speed = Math.random() * (GAME_CONSTANTS.HUNTERS.BLACK.SPEED.MAX - GAME_CONSTANTS.HUNTERS.BLACK.SPEED.MIN) +
 		GAME_CONSTANTS.HUNTERS.BLACK.SPEED.MIN;
-	this.Damage = 100;
-	this.TimeToAttack = GAME_CONSTANTS.HUNTERS.BLACK.TIME_TO_ATTACK_SEC;
 	//Состояния Охотника, в которых он находится!
 	//Могут изменяться независимо|зависимо!
 	
@@ -28,7 +27,21 @@ let Hunter = function (json_params)
 		Hunger: GAME_CONSTANTS.HUNTERS.HUNTER.STATES.HUNGER.DEFAULT,
 		Reproduction: GAME_CONSTANTS.HUNTERS.HUNTER.STATES.REPRODUCTION.DEFAULT
 	};
-	
+
+	//There are sensors, who controls behavior of the Hunter;
+	this.Sensors = {
+	//there is an eyes of Hunter;
+		eyes: new THREE.Box3(),
+		wall_detector: new THREE.Box3()
+	};
+
+	this.Attack = {
+		TimeToAttack: GAME_CONSTANTS.HUNTERS.BLACK.TIME_TO_ATTACK_SEC,
+		AttackedObject: null,
+		Damage: 100,
+		AttackMode: GAME_CONSTANTS.HUNTERS.HUNTER.ATTACK_MODE.REMOTE,
+		MaxDamage: GAME_CONSTANTS.HUNTERS.BLACK.DAMAGE.MAX
+	};
 	this.Health = {
 		Max: GAME_CONSTANTS.HUNTERS.BLACK.HEALTH.MAX,
 		Current: 100
@@ -36,21 +49,19 @@ let Hunter = function (json_params)
 
 	this.Reproduction = {
 		Type: 0,
-		Time: 10
+		Timer: 10
 	};
 
 	this.Gender = {
 		Type: 0
 	};
 
-	this.Damage = {
-		Max: GAME_CONSTANTS.HUNTERS.BLACK.DAMAGE
-	}
-
 	this.Level = {
 		Current: 0	
 	}
-	
+
+	this.CageIndex = this.CageIndex;
+
 	this.Mesh.position.copy(this.StartPosition);
 
 	this.Soul = new HunterSoul({Scene: this.Scene});
@@ -65,19 +76,112 @@ let Hunter = function (json_params)
 	this.MovingType = 0;
 	this.Scene.add(this.Mesh);
 };
+/*This function will activate states*/
+Hunter.prototype.sensorsControl = function ()
+{
+	
+};
 
 /*This Function controls behavior of Hunter*/
 Hunter.prototype.behaviorControl = function ()
 {
+	/*Is Hunter Living?*/
 	switch(this.States.Living){
+		/*If User died, then we can't do anything...*/
 		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.LIVING.DEAD:
 			return ;
 		break;
 		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.LIVING.LIVE:
-			return ;
 		break;
 	}
+	/*Is Hunter Have Attack anybody?*/
+	switch(this.States.Attack)
+	{
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.ATTACK.NO:
+		break;
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.ATTACK.YES:
+			this.behaviorFunction = this.onAttack;
+		break;
+	}
+
+	switch(this.States.Hunger)
+	{
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.HUNGER.NO:
+		break;
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.HUNGER.SLIGHTLY:
+			this.onSlightlyHunger;
+		break;		
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.HUNGER.MEDIUM:
+			this.onMediumHunger;
+		break;		
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.HUNGER.HARD:
+			this.onHardHunger;
+		break;		
+	}
+	
+	switch(this.States.Reproduction)
+	{
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.REPRODUCTION.NO:
+		break;
+
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.REPRODUCTION.YES:
+			this.onReproduction();
+		break;				
+	}
+
+	switch(this.States.Movement)
+	{
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.MOVEMENT.STOP:
+		break;
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.MOVEMENT.WALK:
+			this.onWalk;
+		break;						
+		case GAME_CONSTANTS.HUNTERS.HUNTER.STATES.MOVEMENT.FAST_WALK:
+			this.onFastWalk;
+		break;						
+	}
+
 };
+
+
+Hunter.prototype.onAttack = function ()
+{
+	if(this.AttackedObject)
+	{
+		if(this.get)
+	}
+};
+
+Hunter.prototype.onSlightlyHunger = function ()
+{
+
+};
+
+Hunter.prototype.onMediumHunger = function ()
+{
+	
+};
+
+Hunter.prototype.onHardHunger = function ()
+{
+	
+};
+
+Hunter.prototype.onReproduction = function ()
+{
+
+};
+
+Hunter.prototype.onWalk = function()
+{
+
+};
+
+Hunter.prototype.onFastWalk = function()
+{
+
+};
+
 
 Hunter.prototype.getSoul = function ()
 {
